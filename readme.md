@@ -6,17 +6,26 @@ This is to confirm the [adding-global-where](https://docs.sqlalchemy.org/en/14/o
 
 To run:
 
-
 1. Open this repo in codespaces
+
+    * Takes about a minute; wait until the Ports tab shows up
 
 2. Start the server, using the provided Launch Configuration
 
-3. Issue this is the codespaces terminal window.
+3. Issue this in the codespaces (_not_ your local machine) terminal window:
 
 ```
 curl -X 'GET' \
 'http://localhost:5656/api/Category/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription&page%5Boffset%5D=0&page%5Blimit%5D=10&sort=id' -H 'accept: application/vnd.api+json' -H 'Content-Type: application/vnd.api+json'
 ```
+
+&nbsp;
+
+## Active Code
+
+See `api_logic_server_run.py`, around line 400.
+
+&nbsp;
 
 ## Status
 
@@ -25,7 +34,9 @@ Not working yet.  See [this issue](https://github.com/sqlalchemy/sqlalchemy/disc
 &nbsp;
 
 ----
-> Standard API Logic Server readme
+> Standard API Logic Server readme follows (ignore)
+
+&nbsp;
 
 
 # Tutorial Setup
