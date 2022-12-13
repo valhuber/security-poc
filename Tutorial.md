@@ -1,3 +1,31 @@
+# Security POC
+
+This is to confirm the [adding-global-where](https://docs.sqlalchemy.org/en/14/orm/session_events.html#adding-global-where-on-criteria) functionality.  See also [the examples](https://docs.sqlalchemy.org/en/14/orm/query.html#sqlalchemy.orm.with_loader_criteria).
+
+## Setup and Test
+
+To run:
+
+
+1. Open this repo in codespaces
+
+2. Start the server, using the provided Launch Configuration
+
+3. Issue this is the codespaces terminal window.
+
+```
+   curl -X 'GET' \
+  'http://localhost:5656/api/Category/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription&page%5Boffset%5D=0&page%5Blimit%5D=10&sort=id' -H 'accept: application/vnd.api+json' -H 'Content-Type: application/vnd.api+json'
+```
+
+## Status
+
+Not working yet.  See [this issue](https://github.com/sqlalchemy/sqlalchemy/discussions/8976).
+
+&nbsp;
+
+# Standard API Logic Server readme
+
 ## About this Tutorial
 
 This Tutorial is designed for these scenarios:
