@@ -420,14 +420,14 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
                 and not orm_execute_state.is_column_load
                 and not orm_execute_state.is_relationship_load
             ):            
-                print(f'receive_do_orm_execute alive')
+                # print(f'receive_do_orm_execute alive')
                 mapper = orm_execute_state.bind_arguments['mapper']
                 table = mapper.persist_selectable   # mapper.mapped_table.fullname disparaged
                 if table.fullname == "Category":
                     orm_execute_state.statement = orm_execute_state.statement.options(
                         with_loader_criteria(database.models.Category.Id, database.models.Category.Id == 1))
 
-            print(f'boo ha')
+            # print(f'boo ha')
 
         db.init_app(flask_app)
         with flask_app.app_context():
