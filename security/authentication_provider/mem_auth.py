@@ -13,7 +13,7 @@ class User():
         Users.add(self)
     
     def __str__(self):
-        return(f'User[{self.name} has roles: {self.roles}')
+        return(f'User[{self.name}] has roles: {self.roles}')
 
 class Users:
     users = {}
@@ -31,8 +31,14 @@ class Users:
         return Users.users[name]
 
 
-sam = User("Sam", ("sa", "dev"))
-client1 = User("Client1", ("tenant", "manager"))
-client2 = User("Client2", ("rentor", "manager"))
+User("Sam", ("sa", "dev"))
+User("Client1", ("tenant", "manager"))
+User("Client2", ("renter", "manager"))
+
 sam_row = Users.row("Sam")
-print(f'Sam: {sam}')
+print(f'Sam: {sam_row}')
+
+"""
+this is a super-simplistic auth_provider ( a STUB)
+will typically user provider for sql
+"""

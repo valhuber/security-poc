@@ -1,14 +1,13 @@
 from security.security_sys import Grant
 from database import models
 import safrs
-import sqlalchemy
-import logging
 
 db = safrs.DB         # Use the safrs.DB, not db!
 session = db.session  # sqlalchemy.orm.scoping.scoped_session
 
 
 class Roles():
+    """ Define Roles here, use for code completion """
     tenant = "tenant"
     renter = "renter"
 
