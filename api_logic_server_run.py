@@ -399,22 +399,13 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
         app_logger.info("Declare   Logic complete - logic/declare_logic.py (rules + code)"
             + f' -- {len(database.models.metadata.tables)} tables loaded')
 
-        #from security import security_sys  # activate security listener
-        # security_sys.activate(session)
+        from security import security_sys  # activate security
+        '''
         from sqlalchemy import event, MetaData
         from sqlalchemy.orm import with_loader_criteria
         @event.listens_for(session, 'do_orm_execute')
         def receive_do_orm_execute(orm_execute_state):
             "listen for the 'do_orm_execute' event"
-            # see https://docs.sqlalchemy.org/en/14/orm/session_events.html#adding-global-where-on-criteria
-            # and https://docs.sqlalchemy.org/en/14/orm/query.html#sqlalchemy.orm.with_loader_criteria
-            '''
-            test
-                curl -X 'GET' \
-  'http://localhost:5656/api/Category/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription&page%5Boffset%5D=0&page%5Blimit%5D=10&sort=id' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/vnd.api+json'
-            '''
             if (
                 orm_execute_state.is_select
                 and not orm_execute_state.is_column_load
@@ -426,8 +417,8 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
                 if table.fullname == "Category":
                     orm_execute_state.statement = orm_execute_state.statement.options(
                         with_loader_criteria(database.models.Category.Id, database.models.Category.Id == 1))
-
             # print(f'boo ha')
+            '''
 
         db.init_app(flask_app)
         with flask_app.app_context():
