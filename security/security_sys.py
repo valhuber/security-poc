@@ -6,6 +6,7 @@ from sqlalchemy.orm import session
 from sqlalchemy import event, MetaData
 import safrs
 import database.models
+import security.authentication_provider.mem_auth as authentication_provider
 
 print(f'\nsecurity_sys loaded via api_logic_server_run.py -- import \n')
 
@@ -18,7 +19,7 @@ from sqlalchemy.orm import with_loader_criteria
 
 def get_current_user():
     """ stand-in for authorization """
-    return Users.row("Client1")
+    return authentication_provider.Users.row("Client1")
 
 
 class Grants():  # nah
@@ -60,27 +61,7 @@ class Grant:
                     with_loader_criteria(database.models.Category, each_grant_filter))
 
 
-    @staticmethod
-    def access(on_entity: object, to_role: object = None, filter: object = None):  # nah
-        """
-        each grant winds up executing:
-            orm_execute_state.statement = orm_execute_state.statement.options(
-                with_loader_criteria(database.models.Category, database.models.Category.Id == 1))
-                    sqlalchemy.sql.elements.BinaryExpression
-
-        example:
-            TBD
-
-        args:
-            on_entity: mapped class
-            to_role: role
-            filter: sqlalchemy.sql.elements.BinaryExpression, e.g. database.models.Category.Id == 1
-        """
-        # if (on_entity not in grants_singleton.grants):
-
-        return None
-
-
+'''
 # **********************
 # stand-in for db users
 # **********************
@@ -117,7 +98,8 @@ sam = User("Sam", ("sa", "dev"))
 client1 = User("Client1", ("tenant", "manager"))
 client2 = User("Client2", ("rentor", "manager"))
 sam_row = Users.row("Sam")
-print(f'Sam: {sam}')
+print(f"Sam: {sam}")
+'''
 
 
 @event.listens_for(session, 'do_orm_execute')
