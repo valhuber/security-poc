@@ -7,10 +7,15 @@ import logging
 db = safrs.DB         # Use the safrs.DB, not db!
 session = db.session  # sqlalchemy.orm.scoping.scoped_session
 
-Grant( on_entity = models.Category,    # need way to say "any"
-        to_role = "tenant",             # need code completion
+
+class Roles():
+    tenant = "tenant"
+    renter = "renter"
+
+Grant(  on_entity = models.Category,    # need way to say "any"
+        to_role = Roles.tenant,
         filter = models.Category.Id == 1)  #  e.g., User.row.ParticipantId)
 
-Grant( on_entity = models.Category,    # need way to say "any"
-        to_role = "rentor",             # need code completion
+Grant(  on_entity = models.Category,    # need way to say "any"
+        to_role = Roles.renter,
         filter = models.Category.Id == 2)  #  e.g., User.row.ParticipantId)
