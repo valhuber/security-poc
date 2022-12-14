@@ -28,7 +28,7 @@ def receive_do_orm_execute(orm_execute_state):
         table = mapper.persist_selectable   # mapper.mapped_table.fullname disparaged
         if table.fullname == "Category":
             orm_execute_state.statement = orm_execute_state.statement.options(
-                with_loader_criteria(database.models.Category.Id, database.models.Category.Id == 1))
+                with_loader_criteria(database.models.Category, database.models.Category.Id == 1))
     # print(f'boo ha')
 
 

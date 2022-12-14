@@ -29,7 +29,7 @@ See `api_logic_server_run.py`, around line 400 >> `security/security_sys.py`.
 
 ## Status
 
-Not working yet.  See [this issue](https://github.com/sqlalchemy/sqlalchemy/discussions/8976).
+Now initally running, per [this support](https://github.com/sqlalchemy/sqlalchemy/discussions/8976).
 
 &nbsp;
 
