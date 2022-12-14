@@ -27,6 +27,14 @@ See `api_logic_server_run.py`, around line 400 >> `security/security_sys.py`.
 
 &nbsp;
 
+## Design Notes
+
+<figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/basic-design.png?raw=true"></figure>
+
+
+
+&nbsp;
+
 ## Status
 
 Now initally running, per [this support](https://github.com/sqlalchemy/sqlalchemy/discussions/8976).
