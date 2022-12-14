@@ -18,7 +18,7 @@ from sqlalchemy.orm import with_loader_criteria
 
 def get_current_user():
     """ stand-in for authorization """
-    return Users.row("Sam")
+    return Users.row("Client1")
 
 
 class Grants():  # nah
@@ -36,25 +36,28 @@ class Grant:
     Use code completion to discover models.
     """
 
-    grants = {}
+    grants_by_class = {}
 
     def __init__(self, on_entity: object, to_role: object = None, filter: object = None):
-        if (to_role not in self.grants):
-            self.grants[to_role] = []
-        self.grants[to_role].append( (on_entity, filter) )
+        table_name = on_entity._s_class_name
+        if (table_name not in self.grants_by_class):
+            self.grants_by_class[table_name] = []
+        self.grants_by_class[table_name].append( (to_role, filter) )
 
     @staticmethod
     def exec_grants(orm_execute_state):
         user = get_current_user()
-        for each_role in user.roles:
-            grants_for_role = Grant.grants[each_role]
-            for each_permission in grants_for_role:
-                mapper = orm_execute_state.bind_arguments['mapper']
-                table = mapper.persist_selectable   # mapper.mapped_table.fullname disparaged
-                if table.fullname == "Category":
-                    orm_execute_state.statement = orm_execute_state.statement.options(
-                        with_loader_criteria(database.models.Category, database.models.Category.Id == 1))
+        user_roles = user.roles
+        mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!)
+        table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
+        grants_debug = Grant
+        grants_for_class = Grant.grants_by_class[table_name]  # list of tuples: role, filter
 
+        for each_grant_role, each_grant_filter in grants_for_class:
+            if each_grant_role in user_roles:
+                print('Permission for user.role: {each_role}')
+                orm_execute_state.statement = orm_execute_state.statement.options(
+                    with_loader_criteria(database.models.Category, each_grant_filter))
 
 
     @staticmethod
@@ -111,9 +114,11 @@ class Users:
 
 
 sam = User("Sam", ("sa", "dev"))
-client1 = User("Client1", "tenant")
+client1 = User("Client1", ("tenant", "manager"))
+client2 = User("Client2", ("rentor", "manager"))
 sam_row = Users.row("Sam")
 print(f'Sam: {sam}')
+
 
 @event.listens_for(session, 'do_orm_execute')
 def receive_do_orm_execute(orm_execute_state):
@@ -134,3 +139,4 @@ def receive_do_orm_execute(orm_execute_state):
                 orm_execute_state.statement = orm_execute_state.statement.options(
                     with_loader_criteria(database.models.Category, database.models.Category.Id == 1))
     # print(f'boo ha')
+
