@@ -6,7 +6,7 @@ This is to confirm the [adding-global-where](https://docs.sqlalchemy.org/en/14/o
 
 To run:
 
-1. Open this repo in codespaces
+1. Open this repository in codespaces
 
     * Takes about a minute; wait until the Ports tab shows up
 
