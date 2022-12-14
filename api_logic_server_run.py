@@ -399,26 +399,7 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
         app_logger.info("Declare   Logic complete - logic/declare_logic.py (rules + code)"
             + f' -- {len(database.models.metadata.tables)} tables loaded')
 
-        from security import security_sys  # activate security
-        '''
-        from sqlalchemy import event, MetaData
-        from sqlalchemy.orm import with_loader_criteria
-        @event.listens_for(session, 'do_orm_execute')
-        def receive_do_orm_execute(orm_execute_state):
-            "listen for the 'do_orm_execute' event"
-            if (
-                orm_execute_state.is_select
-                and not orm_execute_state.is_column_load
-                and not orm_execute_state.is_relationship_load
-            ):            
-                # print(f'receive_do_orm_execute alive')
-                mapper = orm_execute_state.bind_arguments['mapper']
-                table = mapper.persist_selectable   # mapper.mapped_table.fullname disparaged
-                if table.fullname == "Category":
-                    orm_execute_state.statement = orm_execute_state.statement.options(
-                        with_loader_criteria(database.models.Category.Id, database.models.Category.Id == 1))
-            # print(f'boo ha')
-            '''
+        from security import declare_security  # activate security
 
         db.init_app(flask_app)
         with flask_app.app_context():

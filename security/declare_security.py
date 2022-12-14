@@ -8,7 +8,7 @@ db = safrs.DB         # Use the safrs.DB, not db!
 session = db.session  # sqlalchemy.orm.scoping.scoped_session
 
 Grant.access(
-        on_entity = models.Customer,  # need way to say "any"
-        to_role = "standard_role",
-        where = session.query(models.Order).
-                filter(models.Order.Id == User.row.ParticipantId))
+        on_entity = models.Category,    # need way to say "any"
+        to_role = "public",             # need code completion
+        filter = models.Category.Id == 1)  #  e.g., User.row.ParticipantId)
+

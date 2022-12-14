@@ -40,12 +40,20 @@ class Grant:
     """
 
     @staticmethod
-    def access(on_entity: any, to_role: any = None, where: str = ""):
+    def access(on_entity: object, to_role: object = None, filter: object = None):
         """
-        Derive parent column as sum of designated child column, optional where
+        each grant winds up executing:
+            orm_execute_state.statement = orm_execute_state.statement.options(
+                with_loader_criteria(database.models.Category, database.models.Category.Id == 1))
+                    sqlalchemy.sql.elements.BinaryExpression
 
-        Example:
+        example:
+            TBD
 
+        args:
+            on_entity: mapped class
+            to_role: role
+            filter: sqlalchemy.sql.elements.BinaryExpression, e.g. database.models.Category.Id == 1
         """
         return None
 
