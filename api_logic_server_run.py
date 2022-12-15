@@ -400,27 +400,24 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
             + f' -- {len(database.models.metadata.tables)} tables loaded')
 
         flask_app.config.update(SQLALCHEMY_BINDS = \
-            {'BaseSecurity': flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']})
+            {'security_bind': flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']})
         from security import declare_security  # activate security
         import security.authentication_provider.models
 
         db.init_app(flask_app)
         with flask_app.app_context():
+            # to enable db-based security, activate line 10 in security/security_sys.py
             debug_security_uri = flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']
-            debug_bind_models = database.models.safrs.DB.get_engine()
-            debug_bind_security = security.authentication_provider.models.safrs.DB.get_engine()
+            debug_bind_base_key = database.models.Base
+            debug_bind_base_value = database.models.safrs.DB.get_engine()
+            debug_bind_security_key = security.authentication_provider.models.BaseSecurity
+            debug_bind_security_value = security.authentication_provider.models.safrs.DB.get_engine()
             app_logger.info("Declare Security complete - security/declare_security.py"
                 + f' -- {len(security.authentication_provider.models.metadata.tables)} tables loaded')
             
-            bind_strategy_class = True
-            if bind_strategy_class:
-                session.configure(binds=  # multi_db: database setup
-                    {database.models.Base: database.models.safrs.DB.get_engine(),
-                    security.authentication_provider.models.BaseSecurity: security.authentication_provider.models.safrs.DB.get_engine()})
-            else:
-                session.configure(binds=  # multi_db: database setup
+            session.configure(binds=  # key must be inspectable (not just a string)
                 {database.models.Base: database.models.safrs.DB.get_engine(),
-                 "security_bind": security.authentication_provider.models.safrs.DB.get_engine()})  # fails - bad bind target
+                security.authentication_provider.models.BaseSecurity: security.authentication_provider.models.safrs.DB.get_engine()})
 
             if False and admin_enabled:
                 db.create_all()

@@ -25,6 +25,8 @@ curl -X 'GET' \
 
 See `api_logic_server_run.py`, around line 400 >> `security/security_sys.py`.
 
+To enable db-based security, activate line 10 in `security/security_sys.py.`
+
 &nbsp;
 
 ## Design Notes
@@ -37,7 +39,9 @@ See `api_logic_server_run.py`, around line 400 >> `security/security_sys.py`.
 
 ## Status
 
-Now initally running, per [this support](https://github.com/sqlalchemy/sqlalchemy/discussions/8976).
+Now initially running, per [this support](https://github.com/sqlalchemy/sqlalchemy/discussions/8976), using the in-memory auth provider `security/authentication_provider/mem_auth_row.py.`
+
+The db-based provider (`security/authentication_provider/mem_auth_row.py`) is failing "Users table not found".  This is due to bugs in configuring SQLAlchemy __Binds__ (under investigation).
 
 &nbsp;
 
