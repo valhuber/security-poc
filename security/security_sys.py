@@ -6,7 +6,7 @@ from sqlalchemy.orm import session
 from sqlalchemy import event, MetaData
 import safrs
 import database.models
-import security.authentication_provider.mem_auth as authentication_provider  # TODO: your provider here
+import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
 from sqlalchemy import event, MetaData
 from sqlalchemy.orm import with_loader_criteria
 
@@ -17,7 +17,8 @@ session = db.session  # sqlalchemy.orm.scoping.scoped_session
 
 def get_current_user():
     """ STUB for authorization """
-    return authentication_provider.Users.row("Client1")
+    # return authentication_provider.Users.row("Client1")
+    return authentication_provider.get_user("Client1")
 
 
 class Grant:
@@ -38,16 +39,17 @@ class Grant:
     @staticmethod
     def exec_grants(orm_execute_state):
         user = get_current_user()
-        user_roles = user.roles
+        user_roles = user.role_list
         mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!)
         table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
         grants_for_class = Grant.grants_by_class[table_name]  # list of tuples: role, filter
 
         for each_grant_role, each_grant_filter in grants_for_class:
-            if each_grant_role in user_roles:
-                print(f'Execute Permission for class / role: {table_name} / {each_grant_role} - {each_grant_filter}')
-                orm_execute_state.statement = orm_execute_state.statement.options(
-                    with_loader_criteria(database.models.Category, each_grant_filter))
+            for each_user_role in user.role_list:
+                if each_grant_role == each_user_role.name:
+                    print(f'Execute Permission for class / role: {table_name} / {each_grant_role} - {each_grant_filter}')
+                    orm_execute_state.statement = orm_execute_state.statement.options(
+                        with_loader_criteria(database.models.Category, each_grant_filter))
 
 
 @event.listens_for(session, 'do_orm_execute')
