@@ -409,6 +409,8 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
             debug_security_uri = flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']
             debug_bind_models = database.models.safrs.DB.get_engine()
             debug_bind_security = security.authentication_provider.models.safrs.DB.get_engine()
+            app_logger.info("Declare Security complete - security/declare_security.py"
+                + f' -- {len(security.authentication_provider.models.metadata.tables)} tables loaded')
             session.configure(binds=  # multi_db: database setup
                 {database.models.Base: database.models.safrs.DB.get_engine(),
                  security.authentication_provider.models.BaseSecurity: security.authentication_provider.models.safrs.DB.get_engine()})
