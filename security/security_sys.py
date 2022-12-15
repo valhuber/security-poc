@@ -16,11 +16,32 @@ print(f'\nsecurity_sys loaded via api_logic_server_run.py -- import \n')
 db = safrs.DB         # Use the safrs.DB, not db!
 session = db.session  # sqlalchemy.orm.scoping.scoped_session
 
-def get_current_user():
-    """ STUB for authorization """
-    # return authentication_provider.Users.row("Client1")
-    return authentication_provider.get_user("Client1")
 
+
+class Security:
+
+    """
+    CurrentUser = Security.current_user()  # TODO - how to do this??
+    Returns user rows, with UserRoleList
+    """
+
+    @classmethod
+    def current_user(cls):
+        """ STUB for authorization """
+        # return authentication_provider.Users.row("Client1")
+        return authentication_provider.get_user("Client1")
+
+
+    @staticmethod
+    @classmethod
+    def current_user_has_role(role_name: str) -> bool: 
+        result = False
+        for each_role in __class__.current_user.UserRoleList:
+            if role_name == each_role.name:
+                result = True
+                break
+        return result
+    
 
 class Grant:
 
@@ -39,7 +60,7 @@ class Grant:
 
     @staticmethod
     def exec_grants(orm_execute_state):
-        user = get_current_user()
+        user = Security.current_user()
         user_roles = user.role_list
         mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!)
         table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged

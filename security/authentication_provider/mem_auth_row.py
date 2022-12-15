@@ -15,19 +15,20 @@ def get_user(name):
     """
     return users[name]
 
-def add_user(name: str, role_list):
+def add_user(name: str, id: int, role_list):
     user = DotMap()
     user.name = name
     user.UserRoleList = []
+    user.id = id
     for each_role in role_list:
         r = DotMap()
         r.name = each_role
         user.UserRoleList.append(r)
     users[name] = user
 
-add_user("Sam", ("sa", "dev"))
-add_user("Client1", ("tenant", "manager"))
-add_user("Client2", ("renter", "manager"))
+add_user("Sam", 1, ("sa", "dev"))
+add_user("Client1", 2, ("tenant", "manager"))
+add_user("Client2", 3, ("renter", "manager"))
 
 sam_row = get_user("Sam")
 print(f'Sam: {sam_row}')
