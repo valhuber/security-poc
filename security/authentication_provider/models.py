@@ -28,6 +28,8 @@ from sqlalchemy.dialects.sqlite import *
 
 class Role(SAFRSBase, BaseSecurity):
     __tablename__ = 'Role'
+    __bind_key__ = 'security_bind'
+
 
     id = Column(Integer, primary_key=True)
     name = Column(Text)
@@ -38,6 +40,7 @@ class Role(SAFRSBase, BaseSecurity):
 class User(SAFRSBase, BaseSecurity):
     """ the user table """
     __tablename__ = 'User'
+    __bind_key__ = 'security_bind'
 
     name = Column(Text)
     id = Column(Integer, primary_key=True)
@@ -55,6 +58,7 @@ t_sqlite_sequence = Table(
 
 class UserRole(SAFRSBase, BaseSecurity):
     __tablename__ = 'UserRole'
+    __bind_key__ = 'security_bind'
 
     id = Column(Integer, primary_key=True)
     user_id = Column(ForeignKey('User.id'))

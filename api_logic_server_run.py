@@ -411,9 +411,16 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
             debug_bind_security = security.authentication_provider.models.safrs.DB.get_engine()
             app_logger.info("Declare Security complete - security/declare_security.py"
                 + f' -- {len(security.authentication_provider.models.metadata.tables)} tables loaded')
-            session.configure(binds=  # multi_db: database setup
+            
+            bind_strategy_class = True
+            if bind_strategy_class:
+                session.configure(binds=  # multi_db: database setup
+                    {database.models.Base: database.models.safrs.DB.get_engine(),
+                    security.authentication_provider.models.BaseSecurity: security.authentication_provider.models.safrs.DB.get_engine()})
+            else:
+                session.configure(binds=  # multi_db: database setup
                 {database.models.Base: database.models.safrs.DB.get_engine(),
-                 security.authentication_provider.models.BaseSecurity: security.authentication_provider.models.safrs.DB.get_engine()})
+                 "security_bind": security.authentication_provider.models.safrs.DB.get_engine()})  # fails - bad bind target
 
             if False and admin_enabled:
                 db.create_all()
