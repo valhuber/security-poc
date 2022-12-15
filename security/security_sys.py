@@ -45,7 +45,7 @@ class Grant:
         grants_for_class = Grant.grants_by_class[table_name]  # list of tuples: role, filter
 
         for each_grant_role, each_grant_filter in grants_for_class:
-            for each_user_role in user.role_list:
+            for each_user_role in user.UserRoleList:
                 if each_grant_role == each_user_role.name:
                     print(f'Execute Permission for class / role: {table_name} / {each_grant_role} - {each_grant_filter}')
                     orm_execute_state.statement = orm_execute_state.statement.options(
