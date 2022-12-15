@@ -17,17 +17,35 @@ def create_app(config_filename=None, host="localhost"):
         # db.create_all()
         # db.create_all(bind='admin')
         # create_admin_api(app, port=port, host=host)
-        sam = models.User(name='Sam')
-        db.session.add(sam)
-        db.session.commit()
+        admin = db.session.query(models.User).filter_by(name="admin").one_or_none()
+        if not admin:
+            admin = models.User(name="admin")
+            db.session.add(admin)
+            sam = models.User(name='Sam')
+            db.session.add(sam)
+            c1 = models.User(name='Client1')
+            db.session.add(c1)
+            c2 = models.User(name='Client2')
+            db.session.add(c2)
+            tenant = models.Role(name='tenant')
+            db.session.add(tenant)
+            manager = models.Role(name='manager')
+            db.session.add(manager)
+            sa = models.Role(name='sa')
+            db.session.add(sa)
+            dev = models.Role(name='dev')
+            db.session.add(dev)
 
-        read_sam = session.query(models.User).filter(models.User.name == "Sam").one()
-        print(f'Read Sam: {read_sam}')
+            sam_dev = models.UserRole()
+            sam_dev.user_id = sam.id
+            sam_dev.role_id = dev.id
+            db.session.add(sam_dev)
 
-        user = db.session.query(User).filter_by(username="admin").one_or_none()
-        if not user:
-            user = User(username="admin")
             db.session.commit()
+
+            read_sam = db.session.query(models.User).filter(models.User.name == "Sam").one()
+            print(f'Read Sam: {read_sam}')
+
         # db.session.commit()
 
     return app
