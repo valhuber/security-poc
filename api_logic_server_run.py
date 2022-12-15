@@ -406,8 +406,11 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
 
         db.init_app(flask_app)
         with flask_app.app_context():
+            debug_security_uri = flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']
+            debug_bind_models = database.models.safrs.DB.get_engine()
+            debug_bind_security = security.authentication_provider.models.safrs.DB.get_engine()
             session.configure(binds=  # multi_db: database setup
-                {database.models.Base:          database.models.     safrs.DB.get_engine(),
+                {database.models.Base: database.models.safrs.DB.get_engine(),
                  security.authentication_provider.models.BaseSecurity: security.authentication_provider.models.safrs.DB.get_engine()})
 
             if False and admin_enabled:
