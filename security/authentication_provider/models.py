@@ -15,8 +15,8 @@ from safrs import SAFRSBase
 
 import safrs
 
-Base = declarative_base()
-metadata = Base.metadata
+BaseSecurity = declarative_base()
+metadata = BaseSecurity.metadata
 
 #NullType = db.String  # datatype fixup
 #TIMESTAMP= db.TIMESTAMP
@@ -26,7 +26,7 @@ from sqlalchemy.dialects.sqlite import *
 
 
 
-class Role(SAFRSBase, Base):
+class Role(SAFRSBase, BaseSecurity):
     __tablename__ = 'Role'
 
     id = Column(Integer, primary_key=True)
@@ -35,7 +35,7 @@ class Role(SAFRSBase, Base):
     UserRoleList = relationship('UserRole', cascade_backrefs=True, backref='role')
 
 
-class User(SAFRSBase, Base):
+class User(SAFRSBase, BaseSecurity):
     """ the user table """
     __tablename__ = 'User'
 
@@ -53,7 +53,7 @@ t_sqlite_sequence = Table(
 )
 
 
-class UserRole(SAFRSBase, Base):
+class UserRole(SAFRSBase, BaseSecurity):
     __tablename__ = 'UserRole'
 
     id = Column(Integer, primary_key=True)

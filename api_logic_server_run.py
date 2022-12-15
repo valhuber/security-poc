@@ -399,11 +399,18 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
         app_logger.info("Declare   Logic complete - logic/declare_logic.py (rules + code)"
             + f' -- {len(database.models.metadata.tables)} tables loaded')
 
+        flask_app.config.update(SQLALCHEMY_BINDS = \
+            {'BaseSecurity': flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']})
         from security import declare_security  # activate security
+        import security.authentication_provider.models
 
         db.init_app(flask_app)
         with flask_app.app_context():
-            if admin_enabled:
+            session.configure(binds=  # multi_db: database setup
+                {database.models.Base:          database.models.     safrs.DB.get_engine(),
+                 security.authentication_provider.models.BaseSecurity: security.authentication_provider.models.safrs.DB.get_engine()})
+
+            if False and admin_enabled:
                 db.create_all()
                 db.create_all(bind='admin')
                 session.commit()

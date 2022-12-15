@@ -64,7 +64,12 @@ def receive_do_orm_execute(orm_execute_state):
         # print(f'receive_do_orm_execute alive')
         use_grant_class = True
         if use_grant_class:
-            Grant.exec_grants(orm_execute_state)
+            mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!)
+            table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
+            if table_name == "User":
+                print(f'avoid recursion on User table')
+            else:
+                Grant.exec_grants(orm_execute_state)
         else:  # old code (disabled)
             mapper = orm_execute_state.bind_arguments['mapper']
             table = mapper.persist_selectable   # mapper.mapped_table.fullname disparaged
