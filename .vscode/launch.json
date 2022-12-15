@@ -15,6 +15,16 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Setup authDB",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/security/authentication_provider",
+            "program": "${workspaceFolder}/security/authentication_provider/db_auth_setup.py",
+            "redirectOutput": true,
+            "justMyCode": false,            
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Behave Run",
             "type": "python",
             "request": "launch",

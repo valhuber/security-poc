@@ -36,6 +36,7 @@ class Role(SAFRSBase, Base):
 
 
 class User(SAFRSBase, Base):
+    """ the user table """
     __tablename__ = 'User'
 
     name = Column(Text)
