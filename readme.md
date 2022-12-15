@@ -41,7 +41,7 @@ To enable db-based security, activate line 10 in `security/security_sys.py.`
 
 Now initially running, per [this support](https://github.com/sqlalchemy/sqlalchemy/discussions/8976), using the in-memory auth provider `security/authentication_provider/mem_auth_row.py.`
 
-The db-based provider (`security/authentication_provider/mem_auth_row.py`) is failing "Users table not found".  This is due to bugs in configuring SQLAlchemy __Binds__ (under investigation).
+The db-based provider (`security/authentication_provider/mem_auth_row.py`) is failing "Users table not found".  This is due to bugs in configuring SQLAlchemy __Binds__ (under investigation - see `api_logic_server_run.py`, around line 400).
 
 &nbsp;
 
