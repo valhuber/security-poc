@@ -11,13 +11,10 @@ class Roles():
     tenant = "tenant"
     renter = "renter"
 
-debug_security = Security.current_user().id
-print(f'debug_security: {debug_security}')
-
-Grant(  on_entity = models.Category,    # need way to say "any"
+Grant(  on_entity = models.Category,    # need way to say "any model with attr xyx"?
         to_role = Roles.tenant,
         filter = models.Category.Id == Security.current_user().id)  #  e.g., CurrentUser.ParticipantId)
 
-Grant(  on_entity = models.Category,    # need way to say "any"
+Grant(  on_entity = models.Category,
         to_role = Roles.renter,
-        filter = models.Category.Id == 2)  #  e.g., User.row.ParticipantId)
+        filter = models.Category.Id == 2)
