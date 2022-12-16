@@ -48,6 +48,7 @@ if is_docker() and flask_host == "localhost":
 port = "5656"
 swagger_port = port  # for codespaces - see values in launch config
 http_type = "http"
+security_enabled = True
 
 current_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(current_path)
@@ -401,12 +402,13 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
 
         db.init_app(flask_app)
         with flask_app.app_context():
-            import security.authentication_provider.authentication_models
-            flask_app.config.update(SQLALCHEMY_BINDS = \
-                {'security_bind': flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']})
-            from security import declare_security  # activate security
-            app_logger.info("Declare Security complete - security/declare_security.py"
-                + f' -- {len(security.authentication_provider.authentication_models.metadata.tables)} tables loaded')
+            if security_enabled:
+                import security.authentication_provider.authentication_models
+                flask_app.config.update(SQLALCHEMY_BINDS = \
+                    {'security_bind': flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']})
+                from security import declare_security  # activate security
+                app_logger.info("Declare Security complete - security/declare_security.py"
+                    + f' -- {len(security.authentication_provider.authentication_models.metadata.tables)} tables loaded')
                         
             if False and admin_enabled:
                 db.create_all()
