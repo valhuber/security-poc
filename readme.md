@@ -37,6 +37,18 @@ You can define filters for users' roles (role-based access control):
 
 &nbsp;
 
+## Installing Prototype on API Logic Projects
+
+The truly daring can experiment with this on their own project:
+
+1. Clone this, and from the clone..
+2. Copy the security folder to your project
+3. Merge in the changes from
+    1. `api_logic_server_run.py`
+    2. `config.py`
+    
+&nbsp;
+
 ## Design Notes
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/basic-design.png?raw=true"></figure>
