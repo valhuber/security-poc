@@ -52,12 +52,7 @@ class Config:
     # end patch to set db_url for sqlite (only)
 
     security_loc = db_loc = str(project_abs_dir) + "/security/authentication_provider/authentication_db.sqlite"
-    security_url = "sqlite:///" + db_loc
-         
-    SQLALCHEMY_BINDS = {
-        'security_bind':    security_url
-    }    
-      
+    security_url = "sqlite:///" + db_loc      
     SQLALCHEMY_DATABASE_URI_SECURITY = security_url # TODO required??
     app_logger.debug(f'config.py - security_url: {security_url}')
 

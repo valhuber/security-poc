@@ -399,32 +399,15 @@ def create_app(swagger_host: str = None, swagger_port: int = None):
         app_logger.info("Declare   Logic complete - logic/declare_logic.py (rules + code)"
             + f' -- {len(database.models.metadata.tables)} tables loaded')
 
-
         db.init_app(flask_app)
         with flask_app.app_context():
             import security.authentication_provider.authentication_models
-            # to enable db-based security, activate line 10 in security/security_sys.py
-            debug_security_uri = flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']
-            debug_bind_base_key = database.models.Base
-            debug_bind_base_value = database.models.safrs.DB.get_engine()
-            debug_bind_security_key = security.authentication_provider.authentication_models.BaseSecurity
-            debug_bind_security_value = security.authentication_provider.authentication_models.safrs.DB.get_engine()
-            update_bind = True
-            if update_bind:
-                flask_app.config.update(SQLALCHEMY_BINDS = \
-                    {'security_bind': flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']})
-            set_bind = False
-            if set_bind:
-                session.configure(binds=  # key must be inspectable (not just a string)
-                    {database.models.Base: database.models.safrs.DB.get_engine(),
-                    security.authentication_provider.authentication_models.BaseSecurity: security.authentication_provider.authentication_models.safrs.DB.get_engine()})
-            # debug_binds = session.session_factory.kw['binds']  # session.py @ 4206 -- hmm, same key for both
-            # app_logger.debug(f'Binds check: {debug_binds}')
+            flask_app.config.update(SQLALCHEMY_BINDS = \
+                {'security_bind': flask_app.config['SQLALCHEMY_DATABASE_URI_SECURITY']})
             from security import declare_security  # activate security
             app_logger.info("Declare Security complete - security/declare_security.py"
                 + f' -- {len(security.authentication_provider.authentication_models.metadata.tables)} tables loaded')
-            
-            
+                        
             if False and admin_enabled:
                 db.create_all()
                 db.create_all(bind='admin')
