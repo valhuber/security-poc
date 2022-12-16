@@ -45,6 +45,7 @@ class User(SAFRSBase, BaseSecurity, db.Model, UserMixin):
 
     name = Column(Text)
     id = Column(Integer, primary_key=True)
+    client_id = Column(Integer)
     notes = Column(Text)
 
     UserRoleList = relationship('UserRole', cascade_backrefs=True, backref='user')
