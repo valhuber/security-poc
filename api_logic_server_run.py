@@ -65,7 +65,7 @@ handler = logging.StreamHandler(sys.stderr)
 formatter = logging.Formatter('%(message)s')  # lead tag - '%(name)s: %(message)s')
 handler.setFormatter(formatter)
 app_logger.addHandler(handler)
-app_logger.propagate = True
+app_logger.propagate = False
 
 app_logger.setLevel(logging.DEBUG)  # log levels: critical < error < warning(20) < info(30) < debug
 args = ""
