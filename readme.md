@@ -41,7 +41,7 @@ You can define filters for users' roles (role-based access control):
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/basic-design.png?raw=true"></figure>
 
-The provider mechanism is currently this code in `security/security_sys.py`:
+The Authentication Provider mechanism is currently this code in `security/security_sys.py`:
 
 ```python
 # import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
