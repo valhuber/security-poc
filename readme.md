@@ -41,13 +41,20 @@ You can define filters for users' roles (role-based access control):
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/basic-design.png?raw=true"></figure>
 
+The provider mechanism is currently this code in `security/security_sys.py`:
+
+```python
+# import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
+import security.authentication_provider.db_auth as authentication_provider  # TODO: your provider here
+```
+
 &nbsp;
 
 ## Status
 
 Now initially running, per [this support](https://github.com/sqlalchemy/sqlalchemy/discussions/8976), using the in-memory auth provider `security/authentication_provider/mem_auth_row.py.`
 
-The db-based provider (`security/authentication_provider/mem_auth_row.py`) is also running.
+The db-based provider (`security/authentication_provider/db_auth.py`) is also running.
 
 &nbsp;
 
