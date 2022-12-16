@@ -1,6 +1,6 @@
 from dotmap import DotMap
 import sqlalchemy as sqlalchemy
-import security.authentication_provider.models as models
+import security.authentication_provider.authentication_models as authentication_models
 from flask import Flask
 import safrs
 
@@ -17,7 +17,7 @@ def get_user(name):
     """
     db = safrs.DB         # Use the safrs.DB, not db!
     session = db.session  # sqlalchemy.orm.scoping.scoped_session
-    user = session.query(models.User).filter(models.User.name == name).one()  # fails, no such table
+    user = session.query(authentication_models.User).filter(authentication_models.User.name == name).one()  # fails, no such table
     print(f'get_user: {user}')
 
     return user

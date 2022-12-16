@@ -3,7 +3,8 @@ from sqlalchemy import Column, ForeignKey, Integer, Table, Text
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-
+from flask_login import UserMixin
+from flask_sqlalchemy import SQLAlchemy
 
 ########################################################################################################################
 # Classes describing database for SqlAlchemy ORM, initially created by schema introspection.
@@ -14,7 +15,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from safrs import SAFRSBase
 
 import safrs
-
+db = SQLAlchemy()
 BaseSecurity = declarative_base()
 metadata = BaseSecurity.metadata
 
@@ -26,7 +27,7 @@ from sqlalchemy.dialects.sqlite import *
 
 
 
-class Role(SAFRSBase, BaseSecurity):
+class Role(SAFRSBase, BaseSecurity, db.Model, UserMixin):
     __tablename__ = 'Role'
     __bind_key__ = 'security_bind'
 
@@ -37,7 +38,7 @@ class Role(SAFRSBase, BaseSecurity):
     UserRoleList = relationship('UserRole', cascade_backrefs=True, backref='role')
 
 
-class User(SAFRSBase, BaseSecurity):
+class User(SAFRSBase, BaseSecurity, db.Model, UserMixin):
     """ the user table """
     __tablename__ = 'User'
     __bind_key__ = 'security_bind'
@@ -56,7 +57,7 @@ t_sqlite_sequence = Table(
 )
 
 
-class UserRole(SAFRSBase, BaseSecurity):
+class UserRole(SAFRSBase, BaseSecurity, db.Model, UserMixin):
     __tablename__ = 'UserRole'
     __bind_key__ = 'security_bind'
 
