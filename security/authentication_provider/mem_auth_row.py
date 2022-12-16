@@ -19,7 +19,7 @@ def add_user(name: str, id: int, role_list):
     user = DotMap()
     user.name = name
     user.UserRoleList = []
-    user.id = id
+    user.client_id = id
     for each_role in role_list:
         r = DotMap()
         r.name = each_role

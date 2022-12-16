@@ -18,8 +18,7 @@ def get_user(name):
     db = safrs.DB         # Use the safrs.DB, not db!
     session = db.session  # sqlalchemy.orm.scoping.scoped_session
     user = session.query(authentication_models.User).filter(authentication_models.User.name == name).one()  # fails, no such table
-    print(f'get_user: {user}')
-
+    # print(f'get_user: {user}')  # TODO many calls... cache?
     return user
 
 

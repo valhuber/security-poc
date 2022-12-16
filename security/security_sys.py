@@ -6,8 +6,8 @@ from sqlalchemy.orm import session
 from sqlalchemy import event, MetaData
 import safrs
 import database.models
-import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
-# import security.authentication_provider.db_auth as authentication_provider  # TODO: your provider here
+# import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
+import security.authentication_provider.db_auth as authentication_provider  # TODO: your provider here
 from sqlalchemy import event, MetaData
 from sqlalchemy.orm import with_loader_criteria
 
@@ -61,7 +61,7 @@ class Grant:
     @staticmethod
     def exec_grants(orm_execute_state):
         user = Security.current_user()
-        user_roles = user.role_list
+        user_roles = user.UserRoleList
         mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!)
         table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
         grants_for_class = Grant.grants_by_class[table_name]  # list of tuples: role, filter
@@ -88,7 +88,8 @@ def receive_do_orm_execute(orm_execute_state):
             mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!)
             table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
             if table_name == "User":
-                print(f'avoid recursion on User table')
+                pass  # TODO bypass authorization when rules are running
+                # print(f'avoid recursion on User table')
             else:
                 Grant.exec_grants(orm_execute_state)
         else:  # old code (disabled)

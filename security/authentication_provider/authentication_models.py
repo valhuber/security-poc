@@ -62,6 +62,7 @@ class UserRole(SAFRSBase, BaseSecurity, db.Model, UserMixin):
     __bind_key__ = 'security_bind'
 
     id = Column(Integer, primary_key=True)
+    name = Column(Text)
     user_id = Column(ForeignKey('User.id'))
     role_id = Column(ForeignKey('Role.id'))
     notes = Column(Text)
