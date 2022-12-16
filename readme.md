@@ -41,11 +41,13 @@ You can define filters for users' roles (role-based access control):
 
 The truly daring can experiment with this on their own project:
 
-1. Clone this, and from the clone..
+1. Clone the [authentication-app](https://github.com/valhuber/authentication-app), and run the Admin App to create users (you'll need a venv, as usual)
+2. Clone this, and from the clone..
 2. Copy the security folder to your project
 3. Merge in the changes from
     1. `api_logic_server_run.py`
     2. `config.py`
+4. From the authentication-app, copy database/db.sqlite -> $project/security/authentication_provider/authentication_db.sqlite
     
 &nbsp;
 
