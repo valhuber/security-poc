@@ -53,6 +53,10 @@ class Config:
 
     security_loc = db_loc = str(project_abs_dir) + "/security/authentication_provider/authentication_db.sqlite"
     security_url = "sqlite:///" + db_loc
+    SQLALCHEMY_BINDS = {
+        'users':        'mysqldb://localhost/users',
+        'appmeta':      'sqlite:////path/to/appmeta.db'
+    }    
     SQLALCHEMY_DATABASE_URI_SECURITY = security_url
     app_logger.debug(f'config.py - security_url: {security_url}')
 

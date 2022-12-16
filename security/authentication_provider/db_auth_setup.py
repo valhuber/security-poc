@@ -5,9 +5,9 @@ import safrs
 
 def create_app(config_filename=None, host="localhost"):
     app = Flask("demo_app")
-    app.config.update(SQLALCHEMY_DATABASE_URI="sqlite:///" + 'authentication-db.sqlite',
+    app.config.update(SQLALCHEMY_DATABASE_URI="sqlite:///" + 'authentication_db.sqlite',
                       SESSION_COOKIE_SAMESITE="Lax",  # <<--- Strict
-                      SQLALCHEMY_BINDS={'admin': "sqlite:///" + 'authentication-db.sqlite'},
+                      SQLALCHEMY_BINDS={'admin': "sqlite:///" + 'authentication_db.sqlite'},
                       SECRET_KEY="Change me !!",
                       SQLALCHEMY_TRACK_MODIFICATIONS=False,
                       FLASK_DEBUG=True)
