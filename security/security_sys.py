@@ -83,6 +83,7 @@ class Grant:
         self.class_name = on_entity._s_class_name
         self.role_name = to_role
         self.filter = filter
+        self.entity = on_entity
         self.table_name = on_entity.__tablename__  # TODO verify
         if (self.table_name not in self.grants_by_table):
             Grant.grants_by_table[self.table_name] = []
@@ -102,7 +103,7 @@ class Grant:
                     if each_grant.role_name == each_user_role.name:
                         print(f'Execute Permission for class / role: {table_name} / {each_grant.role_name} - {each_grant.filter}')
                         orm_execute_state.statement = orm_execute_state.statement.options(
-                            with_loader_criteria(database.models.Category, each_grant.filter))
+                            with_loader_criteria(each_grant.entity, each_grant.filter))
 
 
 @event.listens_for(session, 'do_orm_execute')
