@@ -27,7 +27,7 @@ from sqlalchemy.dialects.sqlite import *
 
 
 class Category(SAFRSBase, Base):
-    __tablename__ = 'Category'
+    __tablename__ = 'CategoryTable'
 
     Id = Column(Integer, primary_key=True)
     CategoryName = Column(String(8000))
