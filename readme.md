@@ -8,6 +8,16 @@ This POC is intended to:
      * Note using SQLAlchemy means that filters apply to all SARFS and custom api access
      * Working quite well!
 * Confirm whether the basic filtering capability __meets the requirements of 1 real-world app__
+     * Once *certain* use case is *multi-tenent*
+         * Each row is stamped with a `client_id`
+         * User table identifies users' `client_id`
+         * Enforced in `declare_security.py`:
+
+'''python
+Grant(  on_entity = models.Category,
+        to_role = Roles.tenant,
+        filter = models.Category.Id == Security.current_user().client_id)  # User table attributes
+```
 
 &nbsp;
 
