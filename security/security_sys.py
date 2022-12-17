@@ -115,18 +115,10 @@ def receive_do_orm_execute(orm_execute_state):
         and not orm_execute_state.is_relationship_load
     ):            
         # print(f'receive_do_orm_execute alive')
-        use_grant_class = True
-        if use_grant_class:
-            mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!case sensitive if names differ)
-            table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
-            if table_name == "User":
-                pass  # TODO bypass authorization when rules are running
-                # print(f'avoid recursion on User table')
-            else:
-                Grant.exec_grants(orm_execute_state) # SQL read check grants
-        else:  # old code (disabled)
-            mapper = orm_execute_state.bind_arguments['mapper']
-            table = mapper.persist_selectable   # mapper.mapped_table.fullname disparaged
-            if table.fullname == "Category":
-                orm_execute_state.statement = orm_execute_state.statement.options(
-                    with_loader_criteria(database.models.Category, database.models.Category.Id == 1))
+        mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!case sensitive if names differ)
+        table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
+        if table_name == "User":
+            pass  # TODO bypass authorization when rules are running
+            # print(f'avoid recursion on User table')
+        else:
+            Grant.exec_grants(orm_execute_state) # SQL read check grants
