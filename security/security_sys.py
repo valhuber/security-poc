@@ -24,12 +24,12 @@ class Security:
     CurrentUser = Security.current_user()  # TODO - how to do this??
     Returns user rows, with UserRoleList
     """
-
+    
     @classmethod
     def current_user(cls):
         """ STUB for authorization """
         # return authentication_provider.Users.row("Client1")
-        return authentication_provider.get_user("Client1")
+        return authentication_provider.get_user("aneu")
 
 
     @staticmethod
