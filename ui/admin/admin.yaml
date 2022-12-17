@@ -8,7 +8,7 @@ info:
   number_relationships: 13
   number_tables: 17
 resources:
-  Category:
+  CategoryTable:
     info_list: <h1>Tour - Application Information</h1>
           To provide info...
           <ul>
