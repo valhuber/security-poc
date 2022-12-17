@@ -2,12 +2,14 @@
 
 ## Goals
 
-This POC is to explore:
+This POC is intended to:
 
 * Confirm approach to __role-based row authorization__, using SQLAlchemy [adding-global-where](https://docs.sqlalchemy.org/en/14/orm/session_events.html#adding-global-where-on-criteria) functionality.  See also [the examples](https://docs.sqlalchemy.org/en/14/orm/query.html#sqlalchemy.orm.with_loader_criteria).
      * Note using SQLAlchemy means that filters apply to all SARFS and custom api access
      * Working quite well!
 * Confirm whether the basic filtering capability __meets the requirements of 1 real-world app__
+
+&nbsp;
 
 This POC is _not_ meant to explore:
 
@@ -17,6 +19,7 @@ This POC is _not_ meant to explore:
 
 * System issues such as performance, caching, etc.
 
+&nbsp;
 
 ## Setup and Test
 
