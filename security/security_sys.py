@@ -53,7 +53,7 @@ class Grant:
     Use code completion to discover models.
     """
 
-    grants_by_class = {}
+    grants_by_table = {}
     '''
     Dict keyed by Table name, value is a (role,filter)
     '''
@@ -76,12 +76,13 @@ class Grant:
         
         per calls from declare_security.py
         '''
-        self.table_name = on_entity._s_class_name
+        self.class_name = on_entity._s_class_name
         self.role_name = to_role
         self.filter = filter
-        if (self.table_name not in self.grants_by_class):
-            Grant.grants_by_class[self.table_name] = []
-        Grant.grants_by_class[self.table_name].append( self )
+        self.table_name = on_entity.__tablename__  # TODO verify
+        if (self.table_name not in self.grants_by_table):
+            Grant.grants_by_table[self.table_name] = []
+        Grant.grants_by_table[self.table_name].append( self )
 
     @staticmethod
     def exec_grants(orm_execute_state):
@@ -91,9 +92,8 @@ class Grant:
         user = Security.current_user()
         mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!)
         table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
-        if table_name in Grant.grants_by_class:
-            grants_for_class = Grant.grants_by_class[table_name]  # list of grants for this table
-            for each_grant in grants_for_class:
+        if table_name in Grant.grants_by_table:
+            for each_grant in Grant.grants_by_table[table_name]:
                 for each_user_role in user.UserRoleList:
                     if each_grant.role_name == each_user_role.name:
                         print(f'Execute Permission for class / role: {table_name} / {each_grant.role_name} - {each_grant.filter}')
