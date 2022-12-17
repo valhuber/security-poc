@@ -20,16 +20,20 @@ session = db.session  # sqlalchemy.orm.scoping.scoped_session
 
 class Security:
 
+    _current_user = None
+
     """
     CurrentUser = Security.current_user()  # TODO - how to do this??
     Returns user rows, with UserRoleList
     """
-    
+
     @classmethod
     def current_user(cls):
-        """ STUB for authorization """
+        """ STUB for authorization (should have pwd, too) """
         # return authentication_provider.Users.row("Client1")
-        return authentication_provider.get_user("aneu")
+        if Security._current_user is None:
+            Security._current_user = authentication_provider.get_user("aneu")
+        return Security._current_user
 
 
     @staticmethod
