@@ -12,6 +12,7 @@ This POC is intended to:
          * Each row is stamped with a `client_id`
          * User table identifies users' `client_id`
          * Enforced in `declare_security.py`:
+     * Preliminary finding - first test case worked on real-world app
 
 '''python
 Grant(  on_entity = models.Category,
