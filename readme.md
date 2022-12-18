@@ -53,9 +53,9 @@ curl -X 'GET' \
 
 ## Active Code
 
-See `api_logic_server_run.py`, around line 400 >> `security/security_sys.py`.
+See `api_logic_server_run.py`, around line 400 >> `security/system/security_manager.py`.
 
-To enable db-based security, activate line 10 in `security/security_sys.py.`
+To enable db-based security, activate line 10 in `security/system/security_manager.py.`
 
 &nbsp;
 
@@ -85,7 +85,7 @@ The truly daring can experiment with this on their own project:
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/basic-design.png?raw=true"></figure>
 
-The Authentication Provider mechanism is currently this code in `security/security_sys.py`:
+The Authentication Provider mechanism is currently this code in `security/system/security_manager.py`:
 
 ```python
 # import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
