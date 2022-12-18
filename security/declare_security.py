@@ -1,4 +1,4 @@
-from security.security_sys import Grant, Security
+from security.system.security_manager import Grant, Security
 from database import models
 import safrs
 
