@@ -14,7 +14,7 @@ This POC is intended to:
          * Enforced in `declare_security.py`:
      * Preliminary finding - first test case worked on real-world app
 
-'''python
+```python
 Grant(  on_entity = models.Category,
         to_role = Roles.tenant,
         filter = models.Category.Id == Security.current_user().client_id)  # User table attributes
