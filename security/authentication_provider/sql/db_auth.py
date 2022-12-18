@@ -1,6 +1,6 @@
 from dotmap import DotMap
 import sqlalchemy as sqlalchemy
-import security.authentication_provider.authentication_models as authentication_models
+import security.authentication_provider.sql.authentication_models as authentication_models
 from flask import Flask
 import safrs
 
