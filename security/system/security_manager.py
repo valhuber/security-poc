@@ -99,7 +99,7 @@ class Grant:
         self.role_name = to_role
         self.filter = filter
         self.entity = on_entity
-        self.table_name = on_entity.__tablename__  # TODO verify
+        self.table_name = on_entity.__tablename__
         if (self.table_name not in self.grants_by_table):
             Grant.grants_by_table[self.table_name] = []
         Grant.grants_by_table[self.table_name].append( self )
