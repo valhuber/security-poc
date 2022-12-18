@@ -115,7 +115,7 @@ class Grant:
         if table_name in Grant.grants_by_table:
             for each_grant in Grant.grants_by_table[table_name]:
                 for each_user_role in user.UserRoleList:
-                    if each_grant.role_name == each_user_role.name:
+                    if each_grant.role_name == each_user_role.role_name:
                         security_logger.debug(f'Execute Permission for class / role: {table_name} / {each_grant.role_name} - {each_grant.filter}')
                         orm_execute_state.statement = orm_execute_state.statement.options(
                             with_loader_criteria(each_grant.entity, each_grant.filter))
