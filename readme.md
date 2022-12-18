@@ -85,6 +85,8 @@ The truly daring can experiment with this on their own project:
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/basic-design.png?raw=true"></figure>
 
+<figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/authentication-db.png?raw=true"></figure>
+
 The Authentication Provider mechanism is currently this code in `security/system/security_manager.py`:
 
 ```python
