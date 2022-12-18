@@ -1,21 +1,36 @@
 """
-Placeholder stubs
+System support for role based authorization.
+
+Supports declaring grants,
+and enforcing them using SQLAlchemy 
+   * do_orm_execute
+   * with_loader_criteria(each_grant.entity, each_grant.filter)
+
+You typically do not alter this file, except to designate authentication_provider.
 """
 
 from sqlalchemy.orm import session
 from sqlalchemy import event, MetaData
 import safrs
 import database.models
-# import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
-import security.authentication_provider.sql.db_auth as authentication_provider  # TODO: your provider here
+# import security.authentication_provider.memory.auth_provider as authentication_provider
+import security.authentication_provider.sql.auth_provider as authentication_provider  # TODO: your provider here
 from sqlalchemy import event, MetaData
 from sqlalchemy.orm import with_loader_criteria
+import logging, sys
 
-print(f'\nsecurity_sys loaded via api_logic_server_run.py -- import \n')
+security_logger = logging.getLogger('API Logic Security')
+handler = logging.StreamHandler(sys.stderr)
+formatter = logging.Formatter('%(name)s: %(message)s')  # lead tag - '%(name)s: %(message)s')
+handler.setFormatter(formatter)
+security_logger.addHandler(handler)
+security_logger.propagate = False
+security_logger.setLevel(logging.DEBUG)  # log levels: critical < error < warning(20) < info(30) < debug
+
+security_logger.info(f'\nsecurity_manager loaded via api_logic_server_run.py -- import \n')
 
 db = safrs.DB         # Use the safrs.DB, not db!
 session = db.session  # sqlalchemy.orm.scoping.scoped_session
-
 
 
 class Security:
@@ -101,7 +116,7 @@ class Grant:
             for each_grant in Grant.grants_by_table[table_name]:
                 for each_user_role in user.UserRoleList:
                     if each_grant.role_name == each_user_role.name:
-                        print(f'Execute Permission for class / role: {table_name} / {each_grant.role_name} - {each_grant.filter}')
+                        security_logger.debug(f'Execute Permission for class / role: {table_name} / {each_grant.role_name} - {each_grant.filter}')
                         orm_execute_state.statement = orm_execute_state.statement.options(
                             with_loader_criteria(each_grant.entity, each_grant.filter))
 
@@ -114,11 +129,11 @@ def receive_do_orm_execute(orm_execute_state):
         and not orm_execute_state.is_column_load
         and not orm_execute_state.is_relationship_load
     ):            
-        # print(f'receive_do_orm_execute alive')
+        security_logger.debug(f'receive_do_orm_execute alive')
         mapper = orm_execute_state.bind_arguments['mapper']   # TODO table vs class (!!case sensitive if names differ)
         table_name = mapper.persist_selectable.fullname   # mapper.mapped_table.fullname disparaged
         if table_name == "User":
             pass  # TODO bypass authorization when rules are running
-            # print(f'avoid recursion on User table')
+            security_logger.debug(f'avoid recursion on User table')
         else:
             Grant.exec_grants(orm_execute_state) # SQL read check grants
