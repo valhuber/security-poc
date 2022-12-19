@@ -13,11 +13,12 @@ from sqlalchemy.orm import session
 from sqlalchemy import event, MetaData
 import safrs
 import database.models
-# import security.authentication_provider.memory.auth_provider as authentication_provider
-import security.authentication_provider.sql.auth_provider as authentication_provider  # TODO: your provider here
 from sqlalchemy import event, MetaData
 from sqlalchemy.orm import with_loader_criteria
 import logging, sys
+
+import config
+authentication_provider = config.Config.SECURITY_PROVIDER
 
 security_logger = logging.getLogger('API Logic Security')
 handler = logging.StreamHandler(sys.stderr)
@@ -38,18 +39,26 @@ class Security:
     _current_user = None
 
     """
-    CurrentUser = Security.current_user()  # TODO - how to do this??
+    CurrentUser = Security.current_user()  # TODO - how to enable users to say Security.CurrentUser??
     Returns user rows, with UserRoleList
     """
 
     @classmethod
+    def _authenticate(cls, jwt):
+        """
+        Called by SAFRS and custom endpoints to validate jwt provided in http header
+        
+        Validates JWT (exists, not expired), sets _current_user
+        """
+        return Security._current_user
+    
+    @classmethod
     def current_user(cls):
-        """ STUB for authorization (should have pwd, too) """
+        """ STUB for authentication """
         # return authentication_provider.Users.row("Client1")
         if Security._current_user is None:
-            Security._current_user = authentication_provider.get_user("aneu")
+            Security._current_user = authentication_provider.get_user("aneu", "")
         return Security._current_user
-
 
     @staticmethod
     @classmethod
