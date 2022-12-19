@@ -2,11 +2,11 @@
 
 ## Goals
 
-[This POC](https://github.com/valhuber/security-poc) is intended to:
+[This POC](https://github.com/valhuber/security-poc#readme) is intended to:
 
 * Confirm approach to __role-based row authorization__, using SQLAlchemy [adding-global-where](https://docs.sqlalchemy.org/en/14/orm/session_events.html#adding-global-where-on-criteria) functionality.  See also [the examples](https://docs.sqlalchemy.org/en/14/orm/query.html#sqlalchemy.orm.with_loader_criteria).
      * Note using SQLAlchemy means that filters apply to all SAFRS and custom api access
-     * Working quite well!
+     * SQLAlchemy support is working quite well!
 * Confirm whether the basic filtering capability __meets the requirements of 1 real-world app__
      * Once *certain* use case is *multi-tenent*
          * Each row is stamped with a `client_id`
@@ -42,7 +42,7 @@ To run:
 
 2. Start the server, using the provided Launch Configuration
 
-3. Issue this in the codespaces (_not_ your local machine) terminal window:
+3. Issue this in the codespaces (_not_ your local machine) terminal window, and verify it returns 1 row:
 
 ```
 curl -X 'GET' \
@@ -53,15 +53,13 @@ curl -X 'GET' \
 
 ## Active Code
 
-See `api_logic_server_run.py`, around line 400 >> `security/system/security_manager.py`.
-
-To enable db-based security, activate line 10 in `security/system/security_manager.py.`
+See `api_logic_server_run.py`, around line 400, which activates `security/system/security_manager.py`.
 
 &nbsp;
 
 ## Declaring Logic
 
-You can define filters for users' roles (role-based access control):
+Analogous to logic declarations, Developers declare filters for users' roles (role-based access control):
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/declare-security.png?raw=true"></figure>
 
@@ -91,7 +89,10 @@ The truly daring can experiment with this on their own project:
 
 Note this uses [Multi-DB Support](https://github.com/valhuber/MultiDB).  
 
-The database file is `security/authentication_provider/sql/authentication_db.sqlite`, patterned after an earlier prototype `admin_api.py` (currently unused).
+The database file is `security/authentication_provider/sql/authentication_db.sqlite`, patterned after an earlier prototype `admin_api.py` (currently unused).  This database adds:
+
+* Roles (`Role` and `UserRole`)
+* User.client_id, to test multi-tenant (the test user is **aneu**).
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/authentication-db.png?raw=true"></figure>
 
@@ -101,7 +102,7 @@ The database file is `security/authentication_provider/sql/authentication_db.sql
 
 We are using Abstract Classes ([thanks](https://medium.com/techtofreedom/10-remarkable-python-oop-tips-that-will-optimize-your-code-significantly-a47e4103b44d)) to define provider expectations in `security/authentication_provider/abstract_authentication_provider.py`.
 
-There are 2 implementations:
+There are 2 implementations (both are working):
 
 * `security/authentication_provider/memory`
 * `security/authentication_provider/sql` - uses the _Authentication DB_, above
