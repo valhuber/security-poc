@@ -2,7 +2,7 @@
 
 ## Goals
 
-[This POC](https://github.com/valhuber/security-poc#readme) (runs in codespaces) is intended to:
+[This POC](https://github.com/valhuber/security-poc#readme) (runs in codespaces, explore with ".") is intended to:
 
 * Confirm approach to __role-based row authorization__, using SQLAlchemy [adding-global-where](https://docs.sqlalchemy.org/en/14/orm/session_events.html#adding-global-where-on-criteria) functionality.  See also [the examples](https://docs.sqlalchemy.org/en/14/orm/query.html#sqlalchemy.orm.with_loader_criteria).
      * Note using SQLAlchemy means that filters apply to all SAFRS and custom api access
