@@ -46,6 +46,7 @@ class User(SAFRSBase, BaseSecurity, db.Model, UserMixin):
     id = Column(String(64), primary_key=True, unique=True)
     username = Column(String(128))
     email = Column(String(128))
+    password_hash = Column(String(200))
     allow_client_generated_ids = True
 
     ApiList = relationship('Api', cascade_backrefs=True, backref='owner')

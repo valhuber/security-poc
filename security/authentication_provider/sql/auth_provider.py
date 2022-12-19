@@ -5,10 +5,10 @@ from flask import Flask
 import safrs
 
 # **********************
-# db auth provider TODO
+# db auth provider
 # **********************
 
-def get_user(name):
+def get_user(name, password):
     """
     Must return a row object with attributes name and role_list
     role_list is a list of row objects with attribute name
@@ -17,7 +17,7 @@ def get_user(name):
     """
     db = safrs.DB         # Use the safrs.DB, not db!
     session = db.session  # sqlalchemy.orm.scoping.scoped_session
-    user = session.query(authentication_models.User).filter(authentication_models.User.id == name).one()  # fails, no such table
+    user = session.query(authentication_models.User).filter(authentication_models.User.id == name).one()
     # print(f'get_user: {user}')  # TODO many calls... cache?
     return user
 
