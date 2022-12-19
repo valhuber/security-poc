@@ -85,22 +85,40 @@ The truly daring can experiment with this on their own project:
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/basic-design.png?raw=true"></figure>
 
+&nbsp;
+
+### Authentication DB
+
+Note this uses [Multi-DB Support](https://github.com/valhuber/MultiDB).  
+
+The database file is `security/authentication_provider/sql/authentication_db.sqlite`, patterned after an earlier prototype `admin_api.py` (currently unused).
+
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/authentication-db.png?raw=true"></figure>
 
-The Authentication Provider mechanism is currently this code in `security/system/security_manager.py`:
+&nbsp;
+
+### Authentication Provider
+
+We are using Abstract Classes ([thanks](https://medium.com/techtofreedom/10-remarkable-python-oop-tips-that-will-optimize-your-code-significantly-a47e4103b44d)) to define provider expectations in `security/authentication_provider/abstract_authentication_provider.py`.
+
+There are 2 implementations:
+
+* `security/authentication_provider/memory`
+* `security/authentication_provider/sql` - uses the _Authentication DB_, above
+
+You select the _authentication_provider_ in `config.py`:
 
 ```python
-# import security.authentication_provider.mem_auth_row as authentication_provider  # TODO: your provider here
-import security.authentication_provider.db_auth as authentication_provider  # TODO: your provider here
+    from security.authentication_provider.sql.auth_provider import Authentication_Provider
+    SECURITY_PROVIDER = Authentication_Provider
 ```
-
 &nbsp;
 
 ## Status
 
 Now initially running, per [this support](https://github.com/sqlalchemy/sqlalchemy/discussions/8976), using the in-memory auth provider `security/authentication_provider/mem_auth_row.py.`
 
-The db-based provider (`security/authentication_provider/db_auth.py`) is also running.
+The db-based provider (`security/authentication_provider/sql/auth_provider.py`) is also running.
 
 &nbsp;
 
