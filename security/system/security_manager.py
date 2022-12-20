@@ -6,7 +6,7 @@ and enforcing them using SQLAlchemy
    * do_orm_execute
    * with_loader_criteria(each_grant.entity, each_grant.filter)
 
-You typically do not alter this file, except to designate authentication_provider.
+You typically do not alter this file.
 """
 
 from sqlalchemy.orm import session
@@ -125,7 +125,7 @@ class Grant:
             for each_grant in Grant.grants_by_table[table_name]:
                 for each_user_role in user.UserRoleList:
                     if each_grant.role_name == each_user_role.role_name:
-                        security_logger.debug(f'Execute Permission for class / role: {table_name} / {each_grant.role_name} - {each_grant.filter}')
+                        security_logger.debug(f'Amend Permission for class / role: {table_name} / {each_grant.role_name} - {each_grant.filter}')
                         orm_execute_state.statement = orm_execute_state.statement.options(
                             with_loader_criteria(each_grant.entity, each_grant.filter))
 

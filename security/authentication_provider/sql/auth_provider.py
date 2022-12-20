@@ -19,6 +19,10 @@ class Authentication_Provider(Abstract_Authentication_Provider):
         Must return a row object with attributes name and role_list
         role_list is a list of row objects with attribute name
 
+        oops - password missing TODO
+
+        TP: id / pwd or token
+
         row object is a SQLAlchemy row (could have been a DotMap)
         """
 
