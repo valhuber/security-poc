@@ -59,7 +59,7 @@ See `api_logic_server_run.py`, around line 400, which activates `security/system
 
 ## Declaring Logic
 
-Analogous to logic declarations, Developers declare filters for users' roles (role-based access control):
+Analogous to logic declarations, Developers declare filters for users' roles (role-based access control).  A user can have multiple roles; a users' filters are **and**ed together:
 
 <figure><img src="https://github.com/valhuber/security-poc/blob/main/doc/images/declare-security.png?raw=true"></figure>
 
