@@ -100,6 +100,8 @@ The database file is `security/authentication_provider/sql/authentication_db.sql
 
 ### Authentication Provider
 
+Like Harry Truman's remark that 12 economists have 13 opinions, organizations have a myriad set of ways to identify valid users.  So, a key requirement is an extensible "pluggable" mechanism.
+
 We are using Abstract Classes ([thanks](https://medium.com/techtofreedom/10-remarkable-python-oop-tips-that-will-optimize-your-code-significantly-a47e4103b44d)) to define provider expectations in `security/authentication_provider/abstract_authentication_provider.py`.
 
 There are 2 implementations (both are working):
@@ -113,6 +115,9 @@ You select the _authentication_provider_ in `config.py`:
     from security.authentication_provider.sql.auth_provider import Authentication_Provider
     SECURITY_PROVIDER = Authentication_Provider
 ```
+
+You can define new authentication providers, e.g. for Active Directory, LDAP, etc.
+
 &nbsp;
 
 ## Status
